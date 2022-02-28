@@ -5,6 +5,7 @@
     "leveldb",
     "inih",
     "cpp-httplib",
+    "sqlite3",
     "loguru"
   ]
 }
