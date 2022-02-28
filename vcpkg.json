@@ -5,6 +5,6 @@
     "leveldb",
     "inih",
     "cpp-httplib",
-    "log4cplus"
+    "loguru"
   ]
 }

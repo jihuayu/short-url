@@ -1,8 +1,10 @@
 #include <iostream>
 #include <cassert>
-#include "leveldb/db.h"
-#include "httplib.h"
-int main() {
+#include <leveldb/db.h>
+#include <httplib.h>
+#include <loguru/loguru.hpp>
+int main(int argc, char** argv) {
+    loguru::init(argc, argv);
     leveldb::DB* db;
     leveldb::Options options;
     options.create_if_missing = true;
@@ -16,6 +18,7 @@ int main() {
             std::string value;
             leveldb::Status s = db->Get(leveldb::ReadOptions(), path, &value);
             if (s.ok()){
+                LOG_F(INFO, "Get short url %s", path.c_str());
                 res.set_redirect(value);
             }
             else{
@@ -32,6 +35,7 @@ int main() {
         if (!path.empty()){
             leveldb::Status s = db->Put(leveldb::WriteOptions(), path, body);
             if (s.ok()){
+                LOG_F(INFO, "Add short url %s -> %s", path.c_str(), body.c_str());
                 res.status = 200;
             }
             else{
@@ -47,6 +51,7 @@ int main() {
         if (!path.empty()){
             leveldb::Status s = db->Delete(leveldb::WriteOptions(), path);
             if (s.ok()){
+                LOG_F(INFO, "Delete short url %s", path.c_str());
                 res.status = 200;
             }
             else{
@@ -57,6 +62,7 @@ int main() {
             res.status = 500;
         }
     });
+    LOG_F(INFO, "server start in port %d", 8080);
     svr.listen("0.0.0.0", 8080);
     delete db;
     return 0;
