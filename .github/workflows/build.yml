@@ -28,5 +28,12 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
+    - name: ls
+      run: |
+        cd build
+        ls
+    - uses: actions/upload-artifact@v2
+      with:
+        name: surl
+        path: ${{github.workspace}}/build/surl
       

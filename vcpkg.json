@@ -1,6 +1,6 @@
 {
-  "name": "example",
-  "version-string": "0.0.1",
+  "name": "surl",
+  "version-string": "0.1.0",
   "dependencies": [
     "leveldb",
     "inih",
